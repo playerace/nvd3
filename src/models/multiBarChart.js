@@ -22,6 +22,7 @@ nv.models.multiBarChart = function() {
     , showYAxis = true
     , rightAlignYAxis = false
     , reduceXTicks = true // if false a tick will show for every data point
+    , distanceXTicks = 100
     , staggerLabels = false
     , rotateLabels = 0
     , tooltips = true
@@ -267,7 +268,7 @@ nv.models.multiBarChart = function() {
           if (reduceXTicks)
             xTicks
               .filter(function(d,i) {
-                  return i % Math.ceil(data[0].values.length / (availableWidth / 100)) !== 0;
+                  return i % Math.ceil(data[0].values.length / (availableWidth / distanceXTicks)) !== 0;
                 })
               .selectAll('text, line')
               .style('opacity', 0);
@@ -460,6 +461,12 @@ nv.models.multiBarChart = function() {
   chart.reduceXTicks= function(_) {
     if (!arguments.length) return reduceXTicks;
     reduceXTicks = _;
+    return chart;
+  };
+
+  chart.distanceXTicks= function(_) {
+    if (!arguments.length) return distanceXTicks;
+    distanceXTicks = _;
     return chart;
   };
 
