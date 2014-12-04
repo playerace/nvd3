@@ -18,6 +18,7 @@ nv.models.multiBarTimeSeriesChart = function() {
     , showControls = true
     , showLegend = true
     , reduceXTicks = true // if false a tick will show for every data point
+    , distanceXTicks = 100
     , rotateLabels = 0
     , tooltips = true
     , tooltip = function(key, x, y, e, graph) {
@@ -213,7 +214,7 @@ nv.models.multiBarTimeSeriesChart = function() {
       if (reduceXTicks)
         xTicks
           .filter(function(d,i) {
-              return i % Math.ceil(data[0].values.length / (availableWidth / 100)) !== 0;
+              return i % Math.ceil(data[0].values.length / (availableWidth / distanceXTicks)) !== 0;
             })
           .selectAll('text, line')
           .style('opacity', 0);
@@ -364,6 +365,12 @@ nv.models.multiBarTimeSeriesChart = function() {
   chart.reduceXTicks= function(_) {
     if (!arguments.length) return reduceXTicks;
     reduceXTicks = _;
+    return chart;
+  };
+
+  chart.distanceXTicks= function(_) {
+    if (!arguments.length) return distanceXTicks;
+    distanceXTicks = _;
     return chart;
   };
 
